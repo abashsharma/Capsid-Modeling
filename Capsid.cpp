@@ -13,6 +13,8 @@
 #include "Utils.h"
 #include "Capsid.h"
 
+#This is the main file
+
 namespace capsid
 {
 
