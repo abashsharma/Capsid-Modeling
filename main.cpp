@@ -9,6 +9,7 @@
 #include <chrono>
 #include <mutex>
 
+#include "Sequence.h"
 #include "Utils.h"
 #include "Capsid.h"
 #include "Files.h"
