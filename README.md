@@ -1,5 +1,5 @@
 # Capsid-Modeling
-Surface harmonics to model Virus Capsids
+Surface harmonics to model Virus Capsids \
 Inline code comments can use visual studio extension to render equations.
 
 # Building
