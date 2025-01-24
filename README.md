@@ -4,9 +4,9 @@ Inline code comments can use visual studio extension to render equations.
 
 # Building
 
-git clone https://github.com/abashsharma/Capsid-Modeling.git /
-mkdir build && cd build /
-cmake .. /
+git clone https://github.com/abashsharma/Capsid-Modeling.git \
+mkdir build && cd build \
+cmake .. \
 cmake --build . --config Release
 
 # Code
