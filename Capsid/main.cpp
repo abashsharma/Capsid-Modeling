@@ -26,7 +26,7 @@ int main(int argv, char** argc)
     double MaxCt = 10.0;
     double CStep = 0.1;
     u_t_ N       = 3; // Default
-    u_t_ qpoints = 3;
+    u_t_ qpoints = 10;
     std::string method{ "NCG" };
 
     //Todo: Remove RunMC in the future
