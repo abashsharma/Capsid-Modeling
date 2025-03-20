@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <numbers>
-#include <print>
 #include <thread>
 #include <random>
 #include <chrono>
@@ -27,7 +26,7 @@ int main(int argv, char** argc)
     double MaxCt = 10.0;
     double CStep = 0.1;
     u_t_ N       = 3; // Default
-    u_t_ qpoints = 100;
+    u_t_ qpoints = 3;
     std::string method{ "NCG" };
 
     //Todo: Remove RunMC in the future
@@ -80,14 +79,11 @@ int main(int argv, char** argc)
     u_t_ NMode   = capsid::EnergyModes(N);
     u_t_ NPoints = qpoints * qpoints;
 
-    std::print(R"(Initial parameters:
-    Harmonics degree: {}
-    Energy modes:     {} 
-    Number of points: {}
-)", 
-        N, NMode, NPoints
-    );
-
+    std::cout << "Initial parameters:"
+        << "\n    Harmonics degree: " << N
+        << "\n    Energy modes: " << NMode
+        << "\n    Number of points: " << NPoints
+        << '\n';
 
     capsid::Harmonics h(qpoints, NMode);
 
@@ -103,13 +99,15 @@ int main(int argv, char** argc)
         {
             a_ = dist(capsid::Generator());
         }
-        h.C0 = 2.0;
+        h.C0 = 1.0;
         h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
+	
+        //h.a[0]=1.0;
         optimize(h, "MC");
 
         const auto end{ ch::high_resolution_clock::now() };
-        std::println("Monte Carlo minimization complete. Took: {}", ch::duration_cast<ch::milliseconds>(end-start));
-        std::println("Saving results to {}", (fs::current_path() / fname).string());
+        std::cout << "Monte Carlo minimization complete. Took: " << ch::duration_cast<ch::milliseconds>(end-start) << '\n';
+        std::cout << "Saving results to " << (fs::current_path() / fname).string() << '\n';
 
         capsid::SaveRadii(h, fname);
     }
@@ -117,27 +115,36 @@ int main(int argv, char** argc)
     ///*
     //std::fill(h.a.begin(), h.a.end(), 0);
     //h.a = capsid::randn(NMode);
-    std::uniform_real_distribution<double> dist(0.0, .1);
+    std::uniform_real_distribution<double> dist(0.0, .01);
     for (auto& a_ : h.a)
     {
         a_ = dist(capsid::Generator());
     }
+
+    h.C0 = 1.0;
+    h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
+
+    //output for vect a
+    for (auto& a_ : h.a)
+    {
+   	 std::cout << a_ << '\n';
+    }
+
     // Initial object is a single sphere (spherical harmonics sphere)
-    h.a[5] = 2.0 * std::sqrt(std::numbers::pi);
+   // h.a[5] = 2.0 * std::sqrt(std::numbers::pi);
     
     const auto K = capsid::Calculate_MeanCurve(h);
     capsid::SaveRadii(h, "test.xyz");
 
-    std::print(R"(
-Results:
-    Analytical Gauss-Bonnet: {},
-    Calculated Gauss-Bonnet: {},
-)", 4 * std::numbers::pi, K);
-    //*/
+    std::cout << "Results:"
+        << "\n    Analytical Gauss-Bonnet: " << 4 * std::numbers::pi
+        << "\n    Calculated Gauss-Bonnet: " << K
+        << '\n';
 
+/*
     const auto nthreads = std::thread::hardware_concurrency() - 1;
 
-    std::println("\nRunning sampler on {} threads...", nthreads);
+    std::cout << "\nRunning sampler on " << nthreads << " threads...\n";
 
     Sequence seq(MaxC0, MaxCt, CStep);
     std::mutex mt;
@@ -178,20 +185,21 @@ Results:
     {
         th.join();
     }
+*/
     return 0;
 }
 
 void usage(const char* invalid)
 {
-    std::print(R"(Invalid option: {}
-Usage: 
+    std::cout << "Invalid option: " << invalid 
+        << R"(Usage:
     -N:  [+Integer]: Degree of harmonics. (default: 9)
     -Q:  [+Integer]: Number of points to compute. (default: 20)
     -S:  [+Double]:  Step size between curvature values. (default: 0.1)
     -M:              Minimization method. (default: NCG)
     -Ct: [+Double]:  Maximum forced curvature value. (default: 10.0)
     -C0: [+Double]:  Maximum buckling value. (default: 10.0)
-)", invalid);
+)";
     std::exit(-1);
 }
 
@@ -200,7 +208,7 @@ i_t_ zero_check(const char* vname, const char* val)
     auto l = std::stol(val);
     if (l <= 0)
     {
-        std::println("{} must be greater than 0", vname);
+        std::cout << vname << " must be greater than 0\n";
         usage(vname);
     }
     return l;
