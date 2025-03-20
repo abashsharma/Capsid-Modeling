@@ -1,20 +1,15 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <vector>
-#include <mdspan>
 #include <numeric>
 #include <array>
 #include <cstdlib>
-#include <print>
 #include <iostream>
 #include <numbers>
 
 #include "Defs.h"
 #include "Utils.h"
 #include "Capsid.h"
-
-#This is the main file
-#1st branch
 
 namespace capsid
 {
@@ -25,11 +20,6 @@ using namespace std::numbers;
     i_t_ m, n; \
     Calculate_NM(i, n, m)
 
-
-/*!
- * Index an mdspan.
- */
-#define _I(...) std::array{ __VA_ARGS__ }
 
 namespace
 {
