@@ -26,7 +26,7 @@ int main(int argv, char** argc)
     double MaxCt = 10.0;
     double CStep = 0.1;
     u_t_ N       = 3; // Default
-    u_t_ qpoints = 10;
+    u_t_ qpoints = 20;
     std::string method{ "NCG" };
 
     //Todo: Remove RunMC in the future
@@ -99,7 +99,7 @@ int main(int argv, char** argc)
         {
             a_ = dist(capsid::Generator());
         }
-        h.C0 = 1.0;
+        h.C0 = 2.0;
         h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
 	
         //h.a[0]=1.0;
@@ -123,15 +123,9 @@ int main(int argv, char** argc)
 
     h.C0 = 1.0;
     h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
-
-    //output for vect a
-    for (auto& a_ : h.a)
-    {
-   	 std::cout << a_ << '\n';
-    }
-
+   
     // Initial object is a single sphere (spherical harmonics sphere)
-   // h.a[5] = 2.0 * std::sqrt(std::numbers::pi);
+    // h.a[5] = 2.0 * std::sqrt(std::numbers::pi);
     
     const auto K = capsid::Calculate_MeanCurve(h);
     capsid::SaveRadii(h, "test.xyz");
