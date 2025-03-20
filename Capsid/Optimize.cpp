@@ -4,7 +4,7 @@
 #include <random>
 #include <utility>
 #include <algorithm>
-#include <print>
+#include <iostream>
 #include "CSV.h"
 #include "Files.h"
 #include "Utils.h"
@@ -37,7 +37,7 @@ void monte_carlo(capsid::Harmonics& h)
     std::uniform_int_distribution<> toPerturb(1, h.a.size());
 
     auto Kcalc = Calculate_MeanCurve(h);
-    std::println("K: {}", Kcalc);
+    std::cout << "K: " << Kcalc << '\n';
     auto E = std_bending_energy(h, Kcalc);
     capsid::SaveRadii(h, fname);
     Vec a0{ std::move(h.a) };
@@ -132,3 +132,4 @@ double capsid_energy_function(const capsid::Harmonics& h)
         e2_sum += C * cct * (cc0 * cc0 - ctc0 * ctc0) * dS;
     }
     return capsid::NormalizeIntegral(e1_sum + e2_sum, h.quadpoints) * .5 * Kb;
+}
