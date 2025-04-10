@@ -1,0 +1,2 @@
+"/project/biohpcadmin/s230065/capsid_conda_env/bin/gcc-ar" qc libfoo.a CMakeFiles/foo.dir/foo.cpp.o
+"/project/biohpcadmin/s230065/capsid_conda_env/bin/gcc-ranlib" libfoo.a

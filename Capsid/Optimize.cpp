@@ -27,7 +27,7 @@ void monte_carlo(capsid::Harmonics& h)
 
     const auto fname{ "mc_capsid_" + std::to_string(h.C0) + "_" + std::to_string(h.Ct) + ".xyz" };
 
-    constexpr auto NSAMPLES = 1000;
+    constexpr auto NSAMPLES = 30000;
     const auto kT = .0005; 
 
     std::uniform_real_distribution<double> dAdist(-.01, .01);

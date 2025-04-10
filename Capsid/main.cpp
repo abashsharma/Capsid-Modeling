@@ -87,20 +87,35 @@ int main(int argv, char** argc)
 
     capsid::Harmonics h(qpoints, NMode);
 
+    
+    std::uniform_real_distribution<double> dist(0.0, 0.5);
+    for (auto& a_ : h.a)
+    {
+      a_ = dist(capsid::Generator());
+    }
+
+    h.C0 = 1.0;
+    h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
+    h.a[1] = 2.0;
+   
+    
+    const auto K = capsid::Calculate_MeanCurve(h);
+    capsid::SaveRadii(h, "Initial.xyz");
+    
     if (RunMC)
     {
-        const fs::path fname{ "mc_min_results.xyz" };
+        const fs::path fname{ "minimization_MC.xyz" };
         const auto start{ ch::high_resolution_clock::now() };
 
         // Randomly generate a coefficients for minimization
         // drawn from a uniform real distribution
-        std::uniform_real_distribution<double> dist(0.0, .1);
-        for (auto& a_ : h.a)
-        {
-            a_ = dist(capsid::Generator());
-        }
-        h.C0 = 2.0;
-        h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
+        //std::uniform_real_distribution<double> dist(0.0, .1);
+        //for (auto& a_ : h.a)
+        //{
+        //    a_ = dist(capsid::Generator());
+        //}
+        //h.C0 = 1.0;
+        //h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
 	
         //h.a[0]=1.0;
         optimize(h, "MC");
@@ -111,25 +126,8 @@ int main(int argv, char** argc)
 
         capsid::SaveRadii(h, fname);
     }
-    // Reset `a` vector
-    ///*
-    //std::fill(h.a.begin(), h.a.end(), 0);
-    //h.a = capsid::randn(NMode);
-    std::uniform_real_distribution<double> dist(0.0, .01);
-    for (auto& a_ : h.a)
-    {
-        a_ = dist(capsid::Generator());
-    }
-
-    h.C0 = 1.0;
-    h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
-   
-    // Initial object is a single sphere (spherical harmonics sphere)
-    // h.a[5] = 2.0 * std::sqrt(std::numbers::pi);
     
-    const auto K = capsid::Calculate_MeanCurve(h);
-    capsid::SaveRadii(h, "test.xyz");
-
+    
     std::cout << "Results:"
         << "\n    Analytical Gauss-Bonnet: " << 4 * std::numbers::pi
         << "\n    Calculated Gauss-Bonnet: " << K

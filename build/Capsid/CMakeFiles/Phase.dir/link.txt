@@ -1,0 +1,1 @@
+/project/biohpcadmin/s230065/capsid_conda_env/bin/c++ -flto=auto -fno-fat-lto-objects -Wl,--dependency-file=CMakeFiles/Phase.dir/link.d CMakeFiles/Phase.dir/main.cpp.o -o Phase  libCapsid.a -lm

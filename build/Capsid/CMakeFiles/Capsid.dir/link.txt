@@ -1,0 +1,2 @@
+"/project/biohpcadmin/s230065/capsid_conda_env/bin/gcc-ar" qc libCapsid.a CMakeFiles/Capsid.dir/Capsid.cpp.o CMakeFiles/Capsid.dir/Utils.cpp.o CMakeFiles/Capsid.dir/Optimize.cpp.o CMakeFiles/Capsid.dir/Files.cpp.o
+"/project/biohpcadmin/s230065/capsid_conda_env/bin/gcc-ranlib" libCapsid.a
