@@ -13,4 +13,4 @@ cmake --build . --config Release
 Written in C++23 for mdspan etc
 (No C++ compiler on BioHPC, so needs to be run in a conda env)
 
-Hint for Armand: Search for Todo in the project to find recommendations.
+To dos: Search for Todo in the project to find recommendations.
