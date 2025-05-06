@@ -1,6 +1,6 @@
 # Capsid-Modeling
 This code solves Surface harmonics to model Virus Capsids. The equation for surface harmonics is given as:\
-Yₗᵐ(θ, φ) = √[(2ℓ + 1)/(4π) · (ℓ - m)! / (ℓ + m)!] · Pₗᵐ(cos θ) · e^(i m φ) \
+![Spherical Harmonics Equation](https://latex.codecogs.com/png.image?\dpi{150}Y_\ell^m(\theta,\phi)=\sqrt{\frac{(2\ell+1)}{4\pi}\cdot\frac{(\ell-m)!}{(\ell+m)!}}P_\ell^m(\cos\theta)e^{im\phi}) \
 Inline code comments can use visual studio extension to render equations.
 
 # Building
