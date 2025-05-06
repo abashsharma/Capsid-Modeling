@@ -33,10 +33,10 @@ Other parameters such as the harmonic coefficients can be changed inside the cod
 
 # Output
 
-The simulation outputs several files including the following:
-Initial.xyz (Initial Configuration)
-radius.txt (Average radius of the geometry as the geometry changes)
-E.txt (Total Energy of the system, to check if the system has achieved equilibrium)
+The simulation outputs several files including the following: \
+Initial.xyz (Initial Configuration) \
+radius.txt (Average radius of the geometry as the geometry changes) \
+E.txt (Total Energy of the system, to check if the system has achieved equilibrium) \
 mc_...txt (the xyz cooardinates of the evolution of geometry)
 
 # Visualization
