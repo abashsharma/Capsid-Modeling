@@ -18,10 +18,29 @@ C++ Version 23
 git clone https://github.com/abashsharma/Capsid-Modeling.git \
 mkdir build && cd build \
 cmake .. \
-cmake --build . --config Release
+cmake --build . --config Release \
 
-# Code
-Written in C++23 for mdspan etc
-(No C++ compiler on BioHPC, so needs to be run in a conda env)
+Execute the code inside the built 'Capsid' directory as: \
+./Phase \
+In order to run a specific minimization routine for the simulation, you can pass it as an argument:\
+./Phase -MC \
 
-To dos: Search for Todo in the project to find recommendations.
+A proper test case is sumarized as: \
+./Phase -MC -N 5 -q 100 \
+where N is the desired number of Harmonic modes, and q is the desired number of grid points on the geometry. \
+
+Other parameters such as the harmonic coefficients can be changed inside the code, and should be built again for now, while we explore the necessary parameters of interest for the study. 
+
+# Output
+
+The simulation outputs several files including the following:
+Initial.xyz (Initial Configuration)
+radius.txt (Average radius of the geometry as the geometry changes)
+E.txt (Total Energy of the system, to check if the system has achieved equilibrium)
+mc_...txt (the xyz cooardinates of the evolution of geometry)
+
+# Visualization
+
+The geometry can be visualized using softwares that render xyz coardinates. One suggested example is using vmd. \
+vmd mc_..txt
+
