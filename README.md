@@ -5,7 +5,7 @@ Spherical Harmonics are special functions defined on the surface of a sphere tha
 # Capsid-Modeling
 This code solves Surface harmonics to model Virus Capsids. The equation for surface harmonics is given as:\
 ![Spherical Harmonics Equation](https://latex.codecogs.com/png.image?\dpi{150}Y_\ell^m(\theta,\phi)=\sqrt{\frac{(2\ell+1)}{4\pi}\cdot\frac{(\ell-m)!}{(\ell+m)!}}P_\ell^m(\cos\theta)e^{im\phi}) \
-Inline code comments can use visual studio extension to render equations.
+(Inline code comments can use visual studio extension to render equations.)
 
 # Usage
 
@@ -18,16 +18,16 @@ C++ Version 23
 git clone https://github.com/abashsharma/Capsid-Modeling.git \
 mkdir build && cd build \
 cmake .. \
-cmake --build . --config Release \
+cmake --build . --config Release
 
 Execute the code inside the built 'Capsid' directory as: \
 ./Phase \
 In order to run a specific minimization routine for the simulation, you can pass it as an argument:\
-./Phase -MC \
+./Phase -MC
 
 A proper test case is sumarized as: \
 ./Phase -MC -N 5 -q 100 \
-where N is the desired number of Harmonic modes, and q is the desired number of grid points on the geometry. \
+where N is the desired number of Harmonic modes, and q is the desired number of grid points on the geometry.
 
 Other parameters such as the harmonic coefficients can be changed inside the code, and should be built again for now, while we explore the necessary parameters of interest for the study. 
 
