@@ -8,11 +8,14 @@
 #include <chrono>
 #include <mutex>
 
+#include "ico_generator.h"	//generates the icosahedron
 #include "Sequence.h"
 #include "Utils.h"
 #include "Capsid.h"
 #include "Files.h"
 #include "Optimize.h"
+
+
 
 namespace ch = std::chrono;
 
