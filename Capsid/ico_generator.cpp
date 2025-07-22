@@ -1,6 +1,6 @@
 #include "ico_generator.h"
-#include <cmath>
-#include <vector>
+##include <cmath>
+##include <vector>
 #include <cstdlib>
 
 Vec3::Vec3() : x(0), y(0), z(0) {}
