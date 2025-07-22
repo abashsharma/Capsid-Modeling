@@ -88,6 +88,18 @@ int main(int argv, char** argc)
         << "\n    Number of points: " << NPoints
         << '\n';
 
+    
+    // Generate icosahedron
+    int ico_points = 400;
+    auto ico_vertex = generate_icosahedron_surface_points(ico_points);
+    //Output icosahedron
+    std::ofstream ofs("icoVertices.xyz");
+    ofs << ico_vertex.size() << "\ntest\n";
+    for (const auto& p : ico_vertex) {
+        ofs << 0 << " " << p.x << " " << p.y << " " << p.z << "\n";
+    }
+	
+    //define Capsid object with the give parameters
     capsid::Harmonics h(qpoints, NMode);
 
     
