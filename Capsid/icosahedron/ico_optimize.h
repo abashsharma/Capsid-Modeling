@@ -2,8 +2,14 @@
 #define ICO_OPTIMIZE_HPP
 
 #include <vector>
-#include "ico_generator.h"    // If needed for Vec3D or related types
-#include "capsid.h"           // For capsid related definitions
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include <limits>
+#include <string>
+#include <iomanip>
+#include "ico_generator.h"
+#include "capsid.h"
 
 
 // Compute RMSD between two vectors of Vec3D points
