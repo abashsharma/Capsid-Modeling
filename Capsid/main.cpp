@@ -7,6 +7,7 @@
 #include <random>
 #include <chrono>
 #include <mutex>
+#include <fstream>
 
 #include "icosahedron/ico_generator.h"	//generates the icosahedron
 #include "Sequence.h"
