@@ -8,7 +8,7 @@
 #include <chrono>
 #include <mutex>
 
-#include "icosaherdron/ico_generator.h"	//generates the icosahedron
+#include "icosahedron/ico_generator.h"	//generates the icosahedron
 #include "Sequence.h"
 #include "Utils.h"
 #include "Capsid.h"
