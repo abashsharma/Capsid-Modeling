@@ -1,5 +1,5 @@
 #include "ico_generator.h"
-// #include <cmath>
+#include <cmath>
 // #include <vector>
 
 
