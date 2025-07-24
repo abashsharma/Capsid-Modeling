@@ -1,13 +1,4 @@
-#include <vector>
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <limits>
-#include <string>
-#include <iomanip>
-#include "harmonics.hpp"
-#include "ico_generator.h"
-#include "capsid.h"
+#include "ico_optimize.h"
 
 double compute_rmsd(const std::vector<Vec3D>& ref, const std::vector<Vec3D>& target) {
     double rms = 0.0;
