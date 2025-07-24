@@ -1,6 +1,0 @@
-/home2/s230065/Milo_Code/repos/Capsid-Modeling/build/CMakeFiles/edit_cache.dir
-/home2/s230065/Milo_Code/repos/Capsid-Modeling/build/CMakeFiles/rebuild_cache.dir
-/home2/s230065/Milo_Code/repos/Capsid-Modeling/build/Capsid/CMakeFiles/Capsid.dir
-/home2/s230065/Milo_Code/repos/Capsid-Modeling/build/Capsid/CMakeFiles/Phase.dir
-/home2/s230065/Milo_Code/repos/Capsid-Modeling/build/Capsid/CMakeFiles/edit_cache.dir
-/home2/s230065/Milo_Code/repos/Capsid-Modeling/build/Capsid/CMakeFiles/rebuild_cache.dir
