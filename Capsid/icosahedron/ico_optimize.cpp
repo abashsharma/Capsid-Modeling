@@ -75,13 +75,12 @@ void ico_optimize(capsid::Harmonics& h,
             best_rms = new_rms;
 
             // Save accepted structure
-            std::ofstream ofs("ico_opt_step_" + std::to_string(iter) + ".xyz");
-            ofs << new_h_xyz.size() << "\nOptimized step " << iter << "\n";
-            for (const auto& p : new_h_xyz)
-                ofs << "0 " << std::fixed << std::setprecision(6)
-                    << p.x << " " << p.y << " " << p.z << "\n";
-
-            std::cout << "Iteration " << iter << ": RMSD improved to " << best_rms << "\n";
+            std::ofstream ofs("ico_opt.xyz", std::ios::app);
+            ofs << new_h_xyz.size() << "\ntest\n";
+            for (const auto& p : new_h_xyz){
+                ofs << "0 " << std::fixed << std::setprecision(6) << p.x << " " << p.y << " " << p.z << "\n";
+            }
+            //std::cout << "Iteration " << iter << ": RMSD improved to " << best_rms << "\n";
         }
     }
 }
