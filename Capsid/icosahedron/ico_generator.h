@@ -1,7 +1,8 @@
 #ifndef ICOSAHEDRON_H
 #define ICOSAHEDRON_H
 
-// #include <vector>
+#include <vector>
+#include <tuple>
 
 struct Vec3 {
     double x, y, z;
