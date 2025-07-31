@@ -212,5 +212,7 @@ std::mt19937& Generator();
 // Return a vector of n normally distributed random numbers N(0,1)
 Vec randn(u_t_ size);
 
+Vec randexp(u_t_ size, double a0);
+
 } // namespace capsid
 
