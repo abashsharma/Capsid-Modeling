@@ -24,4 +24,18 @@ Vec randn(u_t_ size)
     return ret;
 }
 
+Vec randexp(u_t_ size, double a0)
+{
+    Vec ret{ randn(size) };
+    ret[0] = a0;
+    double lambda = 5.0;
+    for (size_t i = 0; i < size; ++i)
+    {
+        auto x = static_cast<double>(i) / (size - 1) * a0; // Rescale to [0, a0]
+        auto env = std::exp(-lambda * x);
+        ret[i] = std::abs(ret[i]) * env;
+    }
+    return ret;
+}
+
 }
