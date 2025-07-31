@@ -75,8 +75,8 @@ std::vector<Vec3> generate_icosahedron_surface_points(int desired_points) {
                        double c = double(k) / subdivisions;
                        Vec3 point = v1 * a + v2 * b + v3 * c;
                        points.push_back(point);
-                }
             }
+        }
     }
 
     return points;
