@@ -115,8 +115,9 @@ int main(int argv, char** argc)
 
     //define Capsid object with the give parameters. each a is generated exponentially
     capsid::Harmonics h(qpoints, NMode);
-    auto a_=capsid::randexp(NMode);
-    h.a = capsid::randexp(NMode, 2*std::sqrt(std::numbers::pi));
+    //auto a_=capsid::randexp(NMode);
+    h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
+    h.a = capsid::randexp(NMode, h.a[0]);
     h.C0 = MaxC0;
     h.Ct = MaxCt;
     for (int i=0; i< size(h.a); i++)
