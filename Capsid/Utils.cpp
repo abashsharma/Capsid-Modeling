@@ -28,7 +28,7 @@ Vec randexp(u_t_ size, double a0)
 {
     Vec ret{ randn(size) };
     ret[0] = a0;
-    double lambda = 5.0;
+    double lambda = 3.0;
     for (size_t i = 0; i < size; ++i)
     {
         auto x = static_cast<double>(i) / (size - 1) * a0; // Rescale to [0, a0]
