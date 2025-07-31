@@ -100,21 +100,30 @@ int main(int argv, char** argc)
         ofs << 0 << " " << p.x << " " << p.y << " " << p.z << "\n";
     }
 	
-    //define Capsid object with the give parameters
+    /*
+    //define Capsid object with the give parameters. each a is generated uniformly between 0 and 0.5
     capsid::Harmonics h(qpoints, NMode);
-
-    
     std::uniform_real_distribution<double> dist(0.0, 0.5);
     for (auto& a_ : h.a)
     {
       a_ = dist(capsid::Generator());
     }
-
     h.C0 = 1.0;
     h.a[0] = 2.0 * std::sqrt(std::numbers::pi);
     h.a[1] = 2.0;
-   
-    
+    */
+
+    //define Capsid object with the give parameters. each a is generated exponentially
+    capsid::Harmonics h(qpoints, NMode);
+    auto a_=capsid::randexp(NMode);
+    h.a = capsid::randexp(NMode, 2*std::sqrt(std::numbers::pi));
+    h.C0 = MaxC0;
+    h.Ct = MaxCt;
+    for (int i=0; i< size(h.a); i++)
+    {
+      std::cout << h.a[i]<<std::endl;
+    }
+
     const auto K = capsid::Calculate_MeanCurve(h);
     capsid::SaveRadii(h, "Initial.xyz");
     
