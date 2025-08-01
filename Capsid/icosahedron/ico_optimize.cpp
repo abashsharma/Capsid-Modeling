@@ -5,6 +5,7 @@
 #include <limits>
 #include <cmath>
 #include <vector>
+#include <unordered_set>
 
 // Compute RMSD between two point sets
 double compute_rmsd(const std::vector<Vec3>& ref, const std::vector<Vec3>& target) {
@@ -20,6 +21,7 @@ double compute_rmsd(const std::vector<Vec3>& ref, const std::vector<Vec3>& targe
     return std::sqrt(rms / ref.size());
 }
 
+//Convert harmonics to xyz
 std::vector<Vec3> get_xyz(const capsid::Harmonics& h)
 {
     std::vector<Vec3> h_points(h.quadpoints * h.quadpoints);
@@ -64,56 +66,58 @@ std::vector<Vec3> center_points(const std::vector<Vec3>& points) {
 // Optimization function
 void ico_optimize(capsid::Harmonics& h, const std::vector<Vec3>& ico_vertices)
 {
-    std::vector<Vec3> h_xyz = get_xyz(h);
-    //std::vector<Vec3> centered_ico = center_points(ico_vertices);
+    
+    //Opt Parameters
+    constexpr auto NSAMPLES = 1000;
+    const auto kT = 0.0005; 
+    const auto fname{ "minimize_ico.xyz" };
 
-    // Map ico vertex to nearest h_xyz point index
+    auto Kcalc = Calculate_MeanCurve(h);        //Initialize h
+    capsid::SaveRadii(h, fname);
+    
+    std::vector<Vec3> h_xyz = get_xyz(h);        //Get xyz from h
+    
+
+    // Map all ico_points to nearest h_xyz 
     std::vector<size_t> matched_indices;               // stores matched h_xyz index per ico_vertex
-    std::unordered_set<size_t> used_h_indices;         // track used h_xyz indices
+    std::unordered_set<size_t> used_ico_indices;         // track used h_xyz indices
 
-    for (const auto& v : ico_vertices) {
+    for (const auto& v : h_xyz) {
         double min_dist = std::numeric_limits<double>::max();
-        size_t best_j = h_xyz.size();  // invalid default, means no match found
+        size_t best_j = ico_vertices.size();  // invalid default, means no match found
 
-        for (size_t j = 0; j < h_xyz.size(); ++j) {
-            if (used_h_indices.count(j)) continue;    // skip already matched h_xyz
+        for (size_t j = 0; j < ico_vertices.size(); ++j) {
+            if (used_ico_indices.count(j)) continue;    // skip already matched h_xyz
 
-            double dist = (v - h_xyz[j]).norm_squared();
+            double dist = (v - ico_vertices[j]).norm_squared();
             if (dist < min_dist) {
                 min_dist = dist;
                 best_j = j;
             }
         }
 
-        if (best_j == h_xyz.size()) {
+        if (best_j == ico_vertices.size()) {
             // No available unmatched h_xyz points left — skip this ico_vertex
             continue;
         }
 
         matched_indices.push_back(best_j);
-        used_h_indices.insert(best_j);
+        used_ico_indices.insert(best_j);
     }
 
-    // Reference points per mapping
+    // Reference points per mapping for the ico_vertices so that there is one-one
     std::vector<Vec3> ref_points;
     for (auto idx : matched_indices)
         ref_points.push_back(ico_vertices[idx]);
 
 
-    //dist Dwrite(std::format("d_{}_{}.csv", h.C0, h.Ct));
-    const auto fname{ "minimize_ico.xyz" };
+    //To store previous state
+    Vec a0{ std::move(h.a)};
+    auto best_rms = compute_rmsd(ref_points, h_xyz);
 
-        
-    constexpr auto NSAMPLES = 1000;
-    const auto kT = 0.0005; 
     std::uniform_real_distribution<double> dAdist(-.01, .01);
     std::uniform_int_distribution<> accept(0, 100);
     std::uniform_int_distribution<> toPerturb(1, h.a.size());
-
-      
-    capsid::SaveRadii(h, fname);
-    Vec a0{ std::move(h.a)};
-    auto best_rms = compute_rmsd(ref_points, h_xyz);
 
     for (int i = 0; i < NSAMPLES; ++i)
     {
@@ -129,12 +133,10 @@ void ico_optimize(capsid::Harmonics& h, const std::vector<Vec3>& ico_vertices)
 
         //Calculate the harmonics again with the new 'a' vector
         Kcalc  = Calculate_MeanCurve(h);
-        
         std::vector<Vec3> new_h_xyz = get_xyz(h);
 
-        double new_rms = compute_rmsd(ref_points, new_h_xyz);
-
-        const auto d_rms = new_new - best_rms;
+        auto new_rms = compute_rmsd(ref_points, new_h_xyz);
+        const auto d_rms = new_rms - best_rms;
         // match kT to tolerance
         // tune kt based on typical energy variance as make proposal
         // set kt within 1 stdev of a typical dE
