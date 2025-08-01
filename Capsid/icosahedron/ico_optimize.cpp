@@ -88,6 +88,7 @@ void ico_optimize(capsid::Harmonics& h)
     for (const auto& p : ico_vertices) {
         ofs << 0 << " " << p.x << " " << p.y << " " << p.z << "\n";
     }
+    ofs.close();
     
     // Map all ico_points to nearest h_xyz 
     std::vector<size_t> matched_indices;               // stores matched h_xyz index per ico_vertex
@@ -171,5 +172,6 @@ void ico_optimize(capsid::Harmonics& h)
             a0 = std::move(h.a);
         }
     }
+    ofs1.close();
     std::cout << "Accepted steps: " << accepted << "/" << NSAMPLES << "\n";
 }
