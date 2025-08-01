@@ -1,5 +1,4 @@
 #include "ico_optimize.h"
-#include "Capsid.h"
 #include <fstream>
 #include <iomanip>
 #include <limits>
