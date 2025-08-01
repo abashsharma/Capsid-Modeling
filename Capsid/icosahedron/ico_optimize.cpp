@@ -9,6 +9,10 @@
 // Compute RMSD between two point sets
 double compute_rmsd(const std::vector<Vec3>& ref, const std::vector<Vec3>& target) {
     double rms = 0.0;
+    //For safety, insclude a check
+    if (ref.size() != target.size()) {
+    throw std::invalid_argument("RMSD vectors must be same length");
+    }
     for (size_t i = 0; i < ref.size(); ++i) {
         Vec3 diff = ref[i] - target[i];
         rms += diff.norm_squared();
