@@ -10,7 +10,7 @@
 #include <fstream>
 
 #include "icosahedron/ico_generator.h"	//generates the icosahedron
-#inlcude "icosahedron/ico_optimize.h"	//optimize with ico
+#include "icosahedron/ico_optimize.h"	//optimize with ico
 #include "Sequence.h"
 #include "Utils.h"
 #include "Capsid.h"
@@ -155,7 +155,7 @@ int main(int argv, char** argc)
         const fs::path fname{ "minimization_Ico.xyz" };
 	const auto start{ ch::high_resolution_clock::now() };
 
-        ico_optimize(capsid::Harmonics& h);
+        ico_optimize(h);
 
         const auto end{ ch::high_resolution_clock::now() };
         std::cout << "Monte Carlo with Ico minimization complete. Took: " << ch::duration_cast<ch::milliseconds>(end-start) << '\n';
