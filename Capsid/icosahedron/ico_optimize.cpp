@@ -63,7 +63,7 @@ std::vector<Vec3> center_points(const std::vector<Vec3>& points) {
 */
 
 // Optimization function
-void ico_optimize(capsid::Harmonics& h, const std::vector<Vec3>& ico_vertices)
+void ico_optimize(capsid::Harmonics& h)
 {
     
     //Opt Parameters
@@ -77,6 +77,11 @@ void ico_optimize(capsid::Harmonics& h, const std::vector<Vec3>& ico_vertices)
     std::vector<Vec3> h_xyz = get_xyz(h);        //Get xyz from h
     
 
+    //Generate icosaherdon
+    int ico_points = 400;
+    const std::vector<Vec3> ico_vertices = generate_icosahedron_surface_points(ico_points);
+    
+    
     // Map all ico_points to nearest h_xyz 
     std::vector<size_t> matched_indices;               // stores matched h_xyz index per ico_vertex
     std::unordered_set<size_t> used_ico_indices;         // track used h_xyz indices
