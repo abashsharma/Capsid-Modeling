@@ -4,6 +4,7 @@ set(CAPSID_CPP_FILES
     "Optimize.cpp"
     "Files.cpp"
     "icosahedron/ico_generator.cpp"
+    "icosahedron/ico_optimize.cpp"
 )
 
 set(CAPSID_HPP_FILES 
@@ -15,6 +16,7 @@ set(CAPSID_HPP_FILES
     "CSV.h" 
     "Sequence.h"
     "icosahedron/ico_generator.h"
+    "icosahedron/ico_optimize.h"
 )
 
 
