@@ -19,6 +19,8 @@ struct Vec3 {
     bool operator<(const Vec3& other) const;
 
     void normalize();
+    double norm_squared() const;
+}
 };
 
 // Generates approximately `desired_points` distributed across the surface of a geometric icosahedron
