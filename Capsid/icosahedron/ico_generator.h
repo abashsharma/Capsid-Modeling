@@ -20,8 +20,8 @@ struct Vec3 {
 
     void normalize();
     double norm_squared() const;
-}
 };
+
 
 // Generates approximately `desired_points` distributed across the surface of a geometric icosahedron
 std::vector<Vec3> generate_icosahedron_surface_points(int desired_points = 400);
