@@ -11,7 +11,7 @@
 #include <string>
 #include <iomanip>
 #include "ico_generator.h"
-#include "Capsid.h"
+#include "../Capsid.h"
 
 
 // Compute RMSD between two vectors of Vec3D points
