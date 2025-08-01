@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef ICO_OPTIMIZE_HPP
 #define ICO_OPTIMIZE_HPP
 
@@ -9,7 +11,7 @@
 #include <string>
 #include <iomanip>
 #include "ico_generator.h"
-#include "capsid.h"
+#include "Capsid.h"
 
 
 // Compute RMSD between two vectors of Vec3D points
@@ -23,7 +25,6 @@ std::vector<Vec3D> center_points(const std::vector<Vec3D>& points);
 // ico_vertices: fixed icosahedron vertex points
 // max_iterations: number of optimization iterations (default 100)
 void ico_optimize(capsid::Harmonics& h,
-                  const std::vector<Vec3D>& ico_vertices,
-                  size_t max_iterations = 100);
+                  const std::vector<Vec3D>& ico_vertices);
 
 #endif // ICO_OPTIMIZE_HPP
