@@ -23,6 +23,10 @@ void Vec3::normalize() {
     }
 }
 
+double Vec3::norm_squared() const {
+    return x * x + y * y + z * z;
+}
+
 static std::vector<Vec3> generate_icosahedron_vertices() {
     const double phi = (1.0 + std::sqrt(5.0)) / 2.0;
     const double a = 1.0;
