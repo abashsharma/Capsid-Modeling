@@ -127,14 +127,14 @@ void ico_optimize(capsid::Harmonics& h)
     for (auto idx : matched_indices)
         ref_points.push_back(ico_vertices[idx]);
 
-
-    //To store previous state
-    Vec a0{ std::move(h.a)};
-    auto best_rms = compute_rmsd(ref_points, h_xyz);
-
     std::uniform_real_distribution<double> dAdist(-.01, .01);
     std::uniform_int_distribution<> accept(0, 100);
     std::uniform_int_distribution<> toPerturb(1, h.a.size());
+
+    
+    //To store previous state
+    Vec a0{ std::move(h.a)};
+    auto best_rms = compute_rmsd(ref_points, h_xyz);
 
     std::ofstream ofs1("rms.xyz"); //To putput rms later
     ofs1 << std::scientific << std::setprecision(8);
