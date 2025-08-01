@@ -5,6 +5,7 @@
 #include <cmath>
 #include <vector>
 #include <unordered_set>
+#include <stdexcept>
 
 // Compute RMSD between two point sets
 double compute_rmsd(const std::vector<Vec3>& ref, const std::vector<Vec3>& target) {
@@ -62,6 +63,7 @@ std::vector<Vec3> center_points(const std::vector<Vec3>& points) {
 }
 */
 
+
 // Optimization function
 void ico_optimize(capsid::Harmonics& h)
 {
@@ -79,12 +81,17 @@ void ico_optimize(capsid::Harmonics& h)
 
     //Generate icosaherdon
     int ico_points = 400;
-    const std::vector<Vec3> ico_vertices = generate_icosahedron_surface_points(ico_points);
-    
+    auto ico_vertices = generate_icosahedron_surface_points(ico_points);
+    //Print out to be sure
+    std::ofstream ofs("icoVertices.xyz");
+    ofs << ico_vertices.size() << "\nIcoVertices\n";
+    for (const auto& p : ico_vertices) {
+        ofs << 0 << " " << p.x << " " << p.y << " " << p.z << "\n";
+    }
     
     // Map all ico_points to nearest h_xyz 
     std::vector<size_t> matched_indices;               // stores matched h_xyz index per ico_vertex
-    std::unordered_set<size_t> used_ico_indices;         // track used h_xyz indices
+    std::unordered_set<size_t> used_ico_indices;         // track used ico_xyz indices
 
     for (const auto& v : h_xyz) {
         double min_dist = std::numeric_limits<double>::max();
@@ -109,6 +116,11 @@ void ico_optimize(capsid::Harmonics& h)
         used_ico_indices.insert(best_j);
     }
 
+    //Just for safety check
+    if (matched_indices.empty()) {
+        throw std::runtime_error("No ico_vertices matched to h_xyz points.");
+    }
+
     // Reference points per mapping for the ico_vertices so that there is one-one
     std::vector<Vec3> ref_points;
     for (auto idx : matched_indices)
@@ -123,6 +135,9 @@ void ico_optimize(capsid::Harmonics& h)
     std::uniform_int_distribution<> accept(0, 100);
     std::uniform_int_distribution<> toPerturb(1, h.a.size());
 
+    std::ofstream ofs1("rms.xyz"); //To putput rms later
+    ofs1 << std::scientific << std::setprecision(8);
+    int accepted = 0;
     for (int i = 0; i < NSAMPLES; ++i)
     {
         int ntb = toPerturb(capsid::Generator());
@@ -140,14 +155,21 @@ void ico_optimize(capsid::Harmonics& h)
         std::vector<Vec3> new_h_xyz = get_xyz(h);
 
         auto new_rms = compute_rmsd(ref_points, new_h_xyz);
+        
         const auto d_rms = new_rms - best_rms;
+        
         // match kT to tolerance
         // tune kt based on typical energy variance as make proposal
         // set kt within 1 stdev of a typical dE
+        //Print out to be sure   
+        
         if (new_rms < best_rms || accept(capsid::Generator()) / 100.0 < std::exp(-d_rms / kT)) {
             best_rms = new_rms;
+            ++accepted;
+            ofs1 << accepted<<" "<<best_rms<<"\n";
             capsid::SaveRadii(h, fname, true);
             a0 = std::move(h.a);
         }
     }
+    std::cout << "Accepted steps: " << accepted << "/" << NSAMPLES << "\n";
 }
